@@ -3,12 +3,20 @@ import { Form, Field } from 'react-final-form';
 import './App.css';
 
 
-const onSubmit = values => window.alert(JSON.stringify(values, 0, 2))
+const onSubmit = values => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      window.alert(JSON.stringify(values, 0, 2))
+      resolve();
+    }, 1000)
+
+  })
+}
 
 const App = () => (
   <Form
     onSubmit={onSubmit}
-    render={({ handleSubmit, values, form, pristine }) => (
+    render={({ handleSubmit, values, form, pristine, submitting }) => (
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="firstName">First Name</label>
@@ -31,8 +39,8 @@ const App = () => (
 
 
         <pre>{JSON.stringify(values, 0, 2)}</pre>
-        <button type="submit" disabled={pristine}>Submit</button>
-        <button type="button" onClick={form.reset} disabled={pristine}>Reset</button>
+        <button type="submit" disabled={pristine || submitting}>Submit</button>
+        <button type="button" onClick={form.reset} disabled={pristine || submitting}>Reset</button>
       </form>
     )}>
 
