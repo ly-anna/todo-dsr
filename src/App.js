@@ -8,7 +8,7 @@ const onSubmit = values => window.alert(JSON.stringify(values, 0, 2))
 const App = () => (
   <Form
     onSubmit={onSubmit}
-    render={({ handleSubmit, values }) => (
+    render={({ handleSubmit, values, form, pristine }) => (
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="firstName">First Name</label>
@@ -31,8 +31,8 @@ const App = () => (
 
 
         <pre>{JSON.stringify(values, 0, 2)}</pre>
-        <button type="submit">Submit</button>
-        <button type="button" onClick="form.reset">Reset</button>
+        <button type="submit" disabled={pristine}>Submit</button>
+        <button type="button" onClick={form.reset} disabled={pristine}>Reset</button>
       </form>
     )}>
 
