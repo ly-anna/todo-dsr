@@ -11,8 +11,8 @@ const App = () => (
           alert(JSON.stringify(values, null, 2));
           setSubmitting(false);
         }, 400);
-        values.login = '' 
-        values.password = '' 
+        // values.login = ''
+        // values.password = ''
       }}
     >
       {({
@@ -23,9 +23,10 @@ const App = () => (
         handleBlur,
         handleSubmit,
         isSubmitting,
+        handleReset,
         /* and other goodies */
       }) => (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} onReset={handleReset}>
             <input
               type="login"
               name="login"
@@ -46,6 +47,9 @@ const App = () => (
             {errors.password && touched.password && errors.password}
             <button type="submit" disabled={isSubmitting}>
               Submit
+          </button>
+            <button type="reset" disabled={isSubmitting}>
+              Reset
           </button>
           </form>
         )}
