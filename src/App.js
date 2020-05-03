@@ -1,19 +1,58 @@
 import React from 'react';
 import { Formik } from 'formik';
+import axios from "axios";
 
 const App = () => (
   <div>
     <h1>Anywhere in your app!</h1>
     <Formik
       initialValues={{ login: '', password: '' }}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
-        // values.login = ''
-        // values.password = ''
+      onSubmit={(values, { setSubmitting }) => {      //что это setSubmitting?
+        // const data = new FormData(event.target);
+
+        // fetch('/api/form-submit-url', {
+        //   method: 'POST',
+        //   body: data,
+        // });
+        axios.post('http://localhost:3000/api/v1/login', values)
+          .then((res) => {
+            console.log(res);
+            console.log(res.data);
+          }).catch((error) => {
+            console.log(error)
+          })
+
       }}
+
+    // axios.post('http://localhost:4000/users/create', userObject)
+    //     .then((res) => {
+    //         console.log(res.data)
+    //     }).catch((error) => {
+    //         console.log(error)
+    //     });
+
+    // console.log(values)
+    // const url = 'http://localhost:3000/api/v1/login';
+    // const res = await fetch(url, {
+    //   method: 'POST',
+    //   body: { "login": values.login, "password": values.password },
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'accept': 'application/json'
+    //   },
+    //   mode: 'no-cors',
+    //   // credentials: 'include',
+
+
+    // })
+    // console.log(res)
+
+    // curl -X POST "http://localhost:3000/api/v1/login" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"login\": \"Admin\", \"password\": \"admin123\"}"
+    // {"name":"SUPERUSER","role":"admin"}
+
+    // values.login = ''
+    // values.password = ''
+    // }}
     >
       {({
         values,
