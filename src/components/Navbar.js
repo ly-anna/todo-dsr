@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import { Link } from 'react-router-dom';
+import Logout from './Logout';
 
 // import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -25,64 +26,52 @@ export default function Navbar() {
       showLabels
       className={classes.root}
     >
-      <BottomNavigationAction
-        component={Link}
-        to="/"
-        label="Main" value="Main" />
-      <BottomNavigationAction
-        component={Link}
-        to="/todo"
-        label="ToDo" value="ToDo" />
-      <BottomNavigationAction
-        component={Link}
-        to="/login"
-        label="Login"
-        value="Login" />
+      <BottomNavigationAction component={Link} to="/" label="Main" value="Main" />
+      <BottomNavigationAction component={Link} to="/todo" label="ToDo" value="ToDo" />
+      <BottomNavigationAction component={Link} to="/login" label="Login" value="Login" />
+      {/* <BottomNavigationAction component={Logout} /> */}
     </BottomNavigation>
   );
 }
 
-
-
-
 // class App extends Component {
-  //   constructor() {
-  //     super();
-  //   };
+//   constructor() {
+//     super();
+//   };
 
-  //   render() {
-  //     return (
-  //       <Provider store={store}>
-  //       <Router>
-  //         <div>
-  //           <nav>
-  //             <ul className="nav">
-  //               <li>
-  //                 <Link to="/">TOP Movies</Link>
-  //               </li>
-  //               <li>
-  //                 <Link to="/tvShows">TOP TV Shows</Link>
-  //               </li>
-  //               <li>
-  //                 <Link to="/people/">People</Link>
-  //               </li>
-  //               <li>
-  //                 <Link to="/compare/">Who is The best?</Link>
-  //               </li>
-  //               <li>
-  //                 <Link to="/about/">Call me</Link>
-  //               </li>
-  //             </ul>
-  //           </nav>
+//   render() {
+//     return (
+//       <Provider store={store}>
+//       <Router>
+//         <div>
+//           <nav>
+//             <ul className="nav">
+//               <li>
+//                 <Link to="/">TOP Movies</Link>
+//               </li>
+//               <li>
+//                 <Link to="/tvShows">TOP TV Shows</Link>
+//               </li>
+//               <li>
+//                 <Link to="/people/">People</Link>
+//               </li>
+//               <li>
+//                 <Link to="/compare/">Who is The best?</Link>
+//               </li>
+//               <li>
+//                 <Link to="/about/">Call me</Link>
+//               </li>
+//             </ul>
+//           </nav>
 
-  //           <Route path="/" exact component={MoviesList} />
-  //           <Route path="/tvShows/" component={TvShows} />
-  //           <Route path="/people/" component={People} />
-  //           <Route path="/compare/" component={Compare} />
-  //           <Route path="/about/" component={About} />
-  //         </div>
-  //       </Router>
-  //       </Provider>
-  //     );
-  //   }
-  // }
+//           <Route path="/" exact component={MoviesList} />
+//           <Route path="/tvShows/" component={TvShows} />
+//           <Route path="/people/" component={People} />
+//           <Route path="/compare/" component={Compare} />
+//           <Route path="/about/" component={About} />
+//         </div>
+//       </Router>
+//       </Provider>
+//     );
+//   }
+// }
