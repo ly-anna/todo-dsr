@@ -1,42 +1,78 @@
-import React from 'react';
-import { Form, Field } from 'react-final-form';
-import './App.css';
+import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import Login from './views/LoginPage';
+import Navbar from './components/Navbar';
+import Main from './views/MainPage';
+import Todo from './views/TodoPage'
+// import PrivateRoute from './components/PrivateComponent'
 
 
-const onSubmit = values => window.alert(JSON.stringify(values, 0, 2))
-
-const App = () => (
-  <Form
-    onSubmit={onSubmit}
-    render={({ handleSubmit, values, form, pristine }) => (
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="firstName">First Name</label>
-          <Field
-            name="firstName"
-            component="input"
-            type="text"
-            placeholder="First Name"
-          />
+class App extends Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <div className="App">
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={Main} />
+            <Route path="/todo" component={Todo} />
+            <Route path="/login" component={Login} />
+            <Redirect from="*" to="/" />
+          </Switch>
         </div>
-        <div>
-          <label htmlFor="secondName">Second Name</label>
-          <Field
-            name="secondName"
-            component="input"
-            type="text"
-            placeholder="Second Name"
-          />
-        </div>
+      </BrowserRouter>
+    );
+  }
+}
+// const App = () => (
+//   <>
+//     <Navbar />
+//     <LoginPage />
+//   </>
+// )
 
+// class App extends Component {
+//   constructor() {
+//     super();
+//   };
 
-        <pre>{JSON.stringify(values, 0, 2)}</pre>
-        <button type="submit" disabled={pristine}>Submit</button>
-        <button type="button" onClick={form.reset} disabled={pristine}>Reset</button>
-      </form>
-    )}>
+//   render() {
+//     return (
+//       <Provider store={store}>
+//       <Router>
+//         <div>
+//           <nav>
+//             <ul className="nav">
+//               <li>
+//                 <Link to="/">TOP Movies</Link>
+//               </li>
+//               <li>
+//                 <Link to="/tvShows">TOP TV Shows</Link>
+//               </li>
+//               <li>
+//                 <Link to="/people/">People</Link>
+//               </li>
+//               <li>
+//                 <Link to="/compare/">Who is The best?</Link>
+//               </li>
+//               <li>
+//                 <Link to="/about/">Call me</Link>
+//               </li>
+//             </ul>
+//           </nav>
 
-  </Form>
-);
+//           <Route path="/" exact component={MoviesList} />
+//           <Route path="/tvShows/" component={TvShows} />
+//           <Route path="/people/" component={People} />
+//           <Route path="/compare/" component={Compare} />
+//           <Route path="/about/" component={About} />
+//         </div>
+//       </Router>
+//       </Provider>
+//     );
+//   }
+// }
 
 export default App;
+
+
