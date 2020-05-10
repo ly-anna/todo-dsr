@@ -1,10 +1,11 @@
 import { userConstants } from './constants';
 
-
 const user = JSON.parse(localStorage.getItem('user'));
+console.log('user', user);
 const initialState = user ? { loggedIn: true, user } : {};
 
-export default function rootReducer(state = initialState, action) {
+function authentication(state = initialState, action) {
+  console.log('state', state);
   switch (action.type) {
     case userConstants.LOGIN_REQUEST:
       return {
@@ -24,3 +25,5 @@ export default function rootReducer(state = initialState, action) {
       return state;
   }
 }
+
+export default authentication;

@@ -27,7 +27,7 @@ const Navbar = () => {
             <NavLink to="/login">Logout2</NavLink>
           </li>
           <li>
-            <a href="/" onClick={userService.logout}>
+            <a href="/" onClick={userService.logoutFromServer}>
               Logout
             </a>
           </li>

@@ -22,7 +22,8 @@ axios.defaults.withCredentials = true;
 //     });
 // }
 
-function login(values, setSubmitting) {
+function loginToServer(values, setSubmitting) {
+  console.log('values', values);
   return axios
     .post(`${appConstants.appUrl}/login`, values)
     .then((res) => {
@@ -58,7 +59,7 @@ function login(values, setSubmitting) {
 //     });
 // };
 
-const logout = () => {
+const logoutFromServer = () => {
   localStorage.removeItem('user');
   axios
     .post(`${appConstants.appUrl}/logout`)
@@ -90,6 +91,6 @@ const logout = () => {
 // }
 
 export const userService = {
-  login,
-  logout,
+  loginToServer,
+  logoutFromServer,
 };

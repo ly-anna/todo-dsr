@@ -3,10 +3,10 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import MainPage from './views/MainPage';
 import TodoPage from './views/TodoPage';
-import { LoginPage } from './views/LoginPage';
+import LoginPage from './views/LoginPage copy';
 
-const useRoutes = (isAuthenticated) => {
-  if (isAuthenticated) {
+const useRoutes = (loggingIn) => {
+  if (loggingIn) {
     return (
       <Switch>
         <Route path="/" exact>
