@@ -1,16 +1,17 @@
 import React, { useContext } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
+import { userService } from '../redux/services';
 
 const Navbar = () => {
-  const history = useHistory();
+  // const history = useHistory();
   // const auth = useContext();
 
-  const logoutHandler = (event) => {
-    event.preventDefault();
-    console.log('logout');
-    // auth.logout();
-    history.push('/login');
-  };
+  // const logoutHandler = (event) => {
+  //   event.preventDefault();
+  //   console.log('logout');
+  //   // auth.logout();
+  //   history.push('/login');
+  // };
   return (
     <nav>
       <div className="" style={{ padding: '0 2rem' }}>
@@ -26,7 +27,7 @@ const Navbar = () => {
             <NavLink to="/login">Logout2</NavLink>
           </li>
           <li>
-            <a href="/" onClick={logoutHandler}>
+            <a href="/" onClick={userService.logout}>
               Logout
             </a>
           </li>

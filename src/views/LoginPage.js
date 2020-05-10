@@ -1,105 +1,94 @@
 import React from 'react';
-import { Formik, Field, Form } from 'formik';
-import axios from 'axios';
-// import { createBrowserHistory } from 'history';
-// import { Redirect } from 'react-router-dom'
-axios.defaults.withCredentials = true;
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-// This will automatically send the cookie in requests.
-/*
-XMLHttpRequest from a different domain cannot set cookie
- values for their own domain unless withCredentials is 
- set to true before making the request.
- */
+import { userActions } from '../redux/actions';
 
-// const history = createBrowserHistory();
-const LoginPage = () => (
-  <div>
-    <h1>This is login page!</h1>
-    <Formik
-      initialValues={{ login: '', password: '' }}
-      onSubmit={(values, { setSubmitting }) => {
-        // что это setSubmitting?
-        // const data = new FormData(event.target);
+class LoginPage extends React.Component {
+  constructor(props) {
+    super(props);
 
-        /*
-        Formik will set up state internally for 
-        storing user inputs through its initialValues prop, 
-        so you don’t need to initialize state from constructor anymore.
-        */
+    // reset login status
+    this.props.logout();
 
-        axios
-          .post('http://localhost:3000/api/v1/login', values)
-          .then((res) => {
-            console.log(res);
-            console.log('res.data', res.data);
-            setSubmitting(false);
-            localStorage.setItem('user', JSON.stringify(res.data.name));
-            console.log(localStorage.getItem('user', JSON.stringify(res.data.name)));
-            if (localStorage.getItem('user')) {
-              console.log('zzzzz');
-              // history.push('/');
-            }
-            // <Redirect to="/" />
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }}
-    >
-      {({
-        values,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting,
-        handleReset,
-        /* and other goodies */
-      }) => (
-        <Form onSubmit={handleSubmit} onReset={handleReset}>
-          <Field
-            type="login"
-            name="login"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.login}
-            required
-          />
-          <Field
-            type="password"
-            name="password"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.password}
-            required
-          />
-          <button type="submit" disabled={isSubmitting}>
-            Submit
-          </button>
-          <button type="reset" disabled={isSubmitting}>
-            Reset
-          </button>
-        </Form>
-      )}
-    </Formik>
+    this.state = {
+      username: '',
+      password: '',
+      submitted: false,
+    };
 
-    <button
-      // type="logout"
-      onClick={() => {
-        axios
-          .post('http://localhost:3000/api/v1/logout')
-          .then((res) => {
-            console.log(res);
-            console.log(res.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }}
-    >
-      logout
-    </button>
-  </div>
-);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-export default LoginPage;
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+
+    this.setState({ submitted: true });
+    const { username, password } = this.state;
+    if (username && password) {
+      this.props.login(username, password);
+    }
+  }
+
+  render() {
+    const { loggingIn } = this.props;
+    const { username, password, submitted } = this.state;
+    return (
+      <div className="col-md-6 col-md-offset-3">
+        <h2>Login</h2>
+        <form name="form" onSubmit={this.handleSubmit}>
+          <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              className="form-control"
+              name="username"
+              value={username}
+              onChange={this.handleChange}
+            />
+            {submitted && !username && <div className="help-block">Username is required</div>}
+          </div>
+          <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              className="form-control"
+              name="password"
+              value={password}
+              onChange={this.handleChange}
+            />
+            {submitted && !password && <div className="help-block">Password is required</div>}
+          </div>
+          <div className="form-group">
+            <button className="btn btn-primary">Login</button>
+            {loggingIn && (
+              <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            )}
+            <Link to="/register" className="btn btn-link">
+              Register
+            </Link>
+          </div>
+        </form>
+      </div>
+    );
+  }
+}
+
+function mapState(state) {
+  const { loggingIn } = state.authentication;
+  return { loggingIn };
+}
+
+const actionCreators = {
+  login: userActions.login,
+  logout: userActions.logout,
+};
+
+const connectedLoginPage = connect(mapState, actionCreators)(LoginPage);
+export { connectedLoginPage as LoginPage };

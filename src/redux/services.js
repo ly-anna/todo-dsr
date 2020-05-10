@@ -1,7 +1,7 @@
-import { axios } from 'axios';
+import axios from 'axios';
 import { appConstants } from './constants';
 
-// axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
 
 // import { authHeader } from '../_helpers';
 
@@ -22,18 +22,13 @@ import { appConstants } from './constants';
 //     });
 // }
 
-export const userService = {
-  login,
-  logout,
-};
-
-function login(values) {
+function login(values, setSubmitting) {
   return axios
     .post(`${appConstants.appUrl}/login`, values)
     .then((res) => {
       console.log(res);
       console.log('res.data', res.data);
-      // setSubmitting(false);
+      setSubmitting(false);
       localStorage.setItem('user', JSON.stringify(res.data.name));
       console.log(localStorage.getItem('user', JSON.stringify(res.data.name)));
       if (localStorage.getItem('user')) {
@@ -46,11 +41,35 @@ function login(values) {
       console.log(error);
     });
 }
+// console.log('logout from serv');
+// alert(`${appConstants.appUrl}/logout`);
+// localStorage.removeItem('user');
 
-function logout() {
-  // remove user from local storage to log user out
+// const logout = () => () => {
+//   axios
+//     .post('http://localhost:3000/api/v1/logout')
+//     .then((res) => {
+//       console.log(res);
+//       console.log(res.data);
+//       localStorage.removeItem('user');
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// };
+
+const logout = () => {
   localStorage.removeItem('user');
-}
+  axios
+    .post(`${appConstants.appUrl}/logout`)
+    .then((res) => {
+      console.log(res);
+      // localStorage.removeItem('user');  не удаляет из localStorage
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 // function handleResponse(response) {
 //   return response.text().then((text) => {
@@ -69,3 +88,8 @@ function logout() {
 //     return data;
 //   });
 // }
+
+export const userService = {
+  login,
+  logout,
+};

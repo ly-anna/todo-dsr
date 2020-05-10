@@ -1,5 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { connect } from 'react-redux';
+import LoginPage from './views/LoginPage copy';
+
 import Navbar from './components/Navbar';
 // import MainPage from './views/MainPage';
 // import Todo from './views/TodoPage';
@@ -13,6 +16,7 @@ function App() {
   return (
     <Router>
       {isAuthenticated && <Navbar />}
+      <LoginPage />
       <div>{routes}</div>
     </Router>
   );
