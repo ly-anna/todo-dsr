@@ -5,9 +5,7 @@ import { userService } from './services';
 const history = createBrowserHistory();
 
 function loginAction(values, setSubmitting) {
-  const { login, password } = values;
-  console.log('loginAction before - values', values);
-  console.log('loginAction before - username', login);
+  const { login } = values;
 
   function request(user) {
     return { type: userConstants.LOGIN_REQUEST, user };
@@ -20,11 +18,8 @@ function loginAction(values, setSubmitting) {
   }
   return (dispatch) => {
     dispatch(request(login));
-    console.log('dispatch(request - username', login);
-    console.log('dispatch(request - values', values);
     userService.loginToServer(values, setSubmitting).then(
-      (res) => {
-        console.log('>>>>>>res', res);
+      () => {
         dispatch(success(login));
         history.push('/');
       },

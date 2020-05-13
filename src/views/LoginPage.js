@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Formik, Field, Form } from 'formik';
 import { connect } from 'react-redux';
 
 import { userActions } from '../redux/actions';
@@ -8,87 +8,92 @@ class LoginPage extends React.Component {
   constructor(props) {
     super(props);
 
-    // reset login status
-    this.props.logout();
+    // this.props.logout();
 
     this.state = {
-      username: '',
+      login: '',
       password: '',
-      submitted: false,
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(e) {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-
-    this.setState({ submitted: true });
-    const { username, password } = this.state;
-    if (username && password) {
-      this.props.login(username, password);
-    }
-  }
+  handleSubmit = (values, { props = this.props, setSubmitting }) => {
+    props.loginAction(values, setSubmitting);
+  };
 
   render() {
-    const { loggingIn } = this.props;
-    const { username, password, submitted } = this.state;
     return (
-      <div className="col-md-6 col-md-offset-3">
-        <h2>Login</h2>
-        <form name="form" onSubmit={this.handleSubmit}>
-          <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              className="form-control"
-              name="username"
-              value={username}
-              onChange={this.handleChange}
-            />
-            {submitted && !username && <div className="help-block">Username is required</div>}
-          </div>
-          <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              className="form-control"
-              name="password"
-              value={password}
-              onChange={this.handleChange}
-            />
-            {submitted && !password && <div className="help-block">Password is required</div>}
-          </div>
-          <div className="form-group">
-            <button className="btn btn-primary">Login</button>
-            {loggingIn && (
-              <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-            )}
-            <Link to="/register" className="btn btn-link">
-              Register
-            </Link>
-          </div>
-        </form>
+      <div>
+        <h1>Login!</h1>
+        <Formik
+          initialValues={{ login: '', password: '' }}
+          onSubmit={this.handleSubmit}
+
+          /*
+        Formik will set up state internally for 
+        storing user inputs through its initialValues prop, 
+        so you don’t need to initialize state from constructor anymore.
+        */
+        >
+          {({
+            values,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+            handleReset,
+            /* and other goodies */
+          }) => (
+            <Form
+              className="form-group mb-3 form-group col-md-6 col-md-offset-3"
+              onSubmit={handleSubmit}
+              onReset={handleReset}
+            >
+              <Field
+                className="form-group form-control"
+                type="login"
+                name="login"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.login}
+                required
+                placeholder="login"
+              />
+              <Field
+                className="form-group form-control help-block"
+                type="password"
+                name="password"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+                placeholder="password"
+                required
+              />
+              <button
+                className="btn btn-primary mx-sm-3 mb-2"
+                type="submit"
+                disabled={isSubmitting}
+              >
+                Submit
+              </button>
+              <button className="btn btn-warning mb-2" type="reset" disabled={isSubmitting}>
+                Reset
+              </button>
+            </Form>
+          )}
+        </Formik>
       </div>
     );
   }
 }
 
-function mapState(state) {
+function mapStateToProps(state) {
   const { loggingIn } = state.authentication;
   return { loggingIn };
 }
 
 const actionCreators = {
-  login: userActions.login,
-  logout: userActions.logout,
+  loginAction: userActions.loginAction,
+  logoutAction: userActions.logoutAction,
 };
 
-const connectedLoginPage = connect(mapState, actionCreators)(LoginPage);
-export { connectedLoginPage as LoginPage };
+export default connect(mapStateToProps, actionCreators)(LoginPage);
