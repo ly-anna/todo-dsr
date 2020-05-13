@@ -1,26 +1,20 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { userService } from '../redux/services';
+import { userActions } from '../redux/actions';
 
 const Navbar = () => {
   return (
-    <nav>
-      <div className="" style={{ padding: '0 2rem' }}>
-        <span className="">Todo App</span>
-        <ul id="nav" className="">
-          <li>
-            <NavLink to="/">Main Page</NavLink>
-          </li>
-          <li>
-            <NavLink to="/todo">Todo Page</NavLink>
-          </li>
-          <li>
-            <a href="/" onClick={userService.logoutFromServer}>
-              Logout
-            </a>
-          </li>
-        </ul>
-      </div>
+    <nav className="navbar">
+      <a className="navbar-brand">App ToDo</a>
+      <NavLink to="/">
+        <button className="btn btn-link">Main Page</button>
+      </NavLink>
+      <NavLink to="/todo">
+        <button className="btn btn-link">Todo Page</button>
+      </NavLink>
+      <button className="btn btn-link" onClick={userActions.logoutAction()}>
+        Logout
+      </button>
     </nav>
   );
 };

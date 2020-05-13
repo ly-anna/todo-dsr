@@ -5,8 +5,8 @@ import MainPage from './views/MainPage';
 import TodoPage from './views/TodoPage';
 import LoginPage from './views/LoginPage';
 
-const useRoutes = (loggingIn) => {
-  if (loggingIn) {
+const useRoutes = (loggedIn) => {
+  if (loggedIn) {
     return (
       <Switch>
         <Route path="/" exact>

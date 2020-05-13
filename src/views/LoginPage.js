@@ -5,19 +5,10 @@ import { connect } from 'react-redux';
 import { userActions } from '../redux/actions';
 
 class LoginPage extends React.Component {
-  constructor(props) {
-    super(props);
-
-    // this.props.logout();
-
-    this.state = {
-      login: '',
-      password: '',
-    };
-  }
-
-  handleSubmit = (values, { props = this.props, setSubmitting }) => {
-    props.loginAction(values, setSubmitting);
+  handleSubmit = (values, foo) => {
+    const { setSubmitting } = foo;
+    const { loginAction } = this.props;
+    loginAction(values, setSubmitting);
   };
 
   render() {
