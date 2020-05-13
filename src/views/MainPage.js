@@ -1,9 +1,22 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const MainPage = () => (
-  <div>
-    <h1>Hello Main Page</h1>
-  </div>
-);
+function MainPage(props) {
+  console.log('MainPage pporops', props); // обсудить
+  return (
+    <div>
+      <h1>Main Page </h1>
+      <h2>
+Hello,{props.user}
+!
+</h2>
+    </div>
+  );
+}
 
-export default MainPage;
+function mapStateToProps(state) {
+  const { user } = state.authentication;
+  return { user };
+}
+
+export default connect(mapStateToProps, {})(MainPage);
