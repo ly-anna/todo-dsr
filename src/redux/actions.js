@@ -13,8 +13,11 @@ function success(user) {
 function failure(error) {
   return { type: userConstants.LOGIN_FAILURE, error };
 }
-function logout() {
-  return { type: userConstants.LOGOUT, user: {} };
+function logoutSuccess() {
+  return { type: userConstants.LOGOUT_SUCCESS };
+}
+function logoutRequest() {
+  return { type: userConstants.LOGOUT_REQUEST };
 }
 
 function loginAction(values, setSubmitting) {
@@ -36,9 +39,35 @@ function loginAction(values, setSubmitting) {
 }
 
 function logoutAction() {
+  console.log('logout Action');
   return (dispatch) => {
-    dispatch(logout());
-    userService.logoutFromServer();
+    dispatch(logoutRequest());
+    console.log(';dispatch(logout());');
+    userService
+      .logoutFromServer()
+      .then(() => {
+        console.log('removeItem   Ipf,tqfadsddddddddddf');
+        dispatch(logoutSuccess());
+        localStorage.removeItem('user');
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
+
+    // .then(() => {
+    //   // localStorage.removeItem('user'); // не удаляет из localStorage
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    //   throw error;
+    // });
+    // .then(console.log('logout then'))
+    //   // .then(() => history.push('/login'))
+    //   .catch((error) => {
+    //     console.log(error);
+    //     // throw error;
+    //   });
   };
 }
 

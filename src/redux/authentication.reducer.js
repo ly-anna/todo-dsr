@@ -17,10 +17,11 @@ function authentication(state = initialState, action) {
       };
     case userConstants.LOGIN_FAILURE:
       return {};
-    case userConstants.LOGOUT:
-      return {
-        // loggedIn: false,
-      };
+    case userConstants.LOGOUT_REQUEST:
+      return { loggingOut: true };
+    case userConstants.LOGOUT_SUCCESS:
+      return { loggedIn: true };
+
     default:
       return state;
   }

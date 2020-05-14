@@ -25,17 +25,8 @@ function loginToServer(values, setSubmitting) {
 }
 
 const logoutFromServer = () => {
-  // e.preventDefault();
-  localStorage.removeItem('user');
-  axios
-    .post(`${appConstants.appUrl}/logout`)
-    .then((res) => {
-      // localStorage.removeItem('user'); // не удаляет из localStorage
-    })
-    .catch((error) => {
-      console.log(error);
-      throw error;
-    });
+  console.log('logoutFromServer');
+  return axios.post(`${appConstants.appUrl}/logout`).then(console.log('logoutFromServer2'));
 };
 
 export const userService = {
