@@ -7,9 +7,9 @@ function MainPage(props) {
     <div>
       <h1>Main Page </h1>
       <h2>
-Hello,{props.user}
-!
-</h2>
+        Hello,
+        {props.user}
+      </h2>
     </div>
   );
 }

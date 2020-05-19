@@ -11,22 +11,12 @@ XMLHttpRequest from a different domain cannot set cookie
  */
 
 // только post
-function loginToServer(values, setSubmitting) {
-  return axios
-    .post(`${appConstants.appUrl}/login`, values)
-    .then((res) => {
-      setSubmitting(false);
-      localStorage.setItem('user', JSON.stringify(res.data.name));
-    })
-    .catch((error) => {
-      console.log(error);
-      throw error;
-    });
+function loginToServer(values) {
+  return axios.post(`${appConstants.appUrl}/login`, values);
 }
 
 const logoutFromServer = () => {
-  console.log('logoutFromServer');
-  return axios.post(`${appConstants.appUrl}/logout`).then(console.log('logoutFromServer2'));
+  return axios.post(`${appConstants.appUrl}/logout`);
 };
 
 export const userService = {

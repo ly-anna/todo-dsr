@@ -22,19 +22,21 @@ function logoutRequest() {
 
 function loginAction(values, setSubmitting) {
   const { login } = values;
-
   return (dispatch) => {
     dispatch(request(login));
-    userService.loginToServer(values, setSubmitting).then(
-      () => {
+    userService
+      .loginToServer(values, setSubmitting)
+      .then((res) => {
+        setSubmitting(false);
+        localStorage.setItem('user', JSON.stringify(res.data.name));
         dispatch(success(login));
         history.push('/');
-      },
-      (error) => {
-        // переписать на Catch и почитать в чем разница
+      })
+      .catch((error) => {
+        console.log(error);
         dispatch(failure(error.toString()));
-      },
-    );
+        throw error;
+      });
   };
 }
 
@@ -49,25 +51,12 @@ function logoutAction() {
         console.log('removeItem   Ipf,tqfadsddddddddddf');
         dispatch(logoutSuccess());
         localStorage.removeItem('user');
+        // history.push('/login')
       })
       .catch((error) => {
         console.log(error);
         throw error;
       });
-
-    // .then(() => {
-    //   // localStorage.removeItem('user'); // не удаляет из localStorage
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    //   throw error;
-    // });
-    // .then(console.log('logout then'))
-    //   // .then(() => history.push('/login'))
-    //   .catch((error) => {
-    //     console.log(error);
-    //     // throw error;
-    //   });
   };
 }
 
