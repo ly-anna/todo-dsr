@@ -4,6 +4,12 @@ import { connect } from 'react-redux';
 
 import { userActions } from '../redux/actions';
 
+const required = (value) => (value ? undefined : 'Required');
+const minLength = (min) => (value) =>
+  value.length >= min ? undefined : `Length should be greater than ${min}`;
+const composeValidators = (...validators) => (value) =>
+  validators.reduce((error, validator) => error || validator(value), undefined);
+
 class LoginPage extends React.Component {
   handleSubmit = (values, foo) => {
     const { setSubmitting } = foo;
@@ -32,6 +38,8 @@ class LoginPage extends React.Component {
             handleSubmit,
             isSubmitting,
             handleReset,
+            errors,
+            touched,
             /* and other goodies */
           }) => (
             <Form
@@ -46,9 +54,11 @@ class LoginPage extends React.Component {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.login}
-                required
                 placeholder="login"
+                validate={composeValidators(required, minLength(5))}
               />
+              {errors.login && touched.login && <div style={{ color: 'red' }}>{errors.login}</div>}
+
               <Field
                 className="form-group form-control help-block"
                 type="password"
@@ -57,8 +67,11 @@ class LoginPage extends React.Component {
                 onBlur={handleBlur}
                 value={values.password}
                 placeholder="password"
-                required
+                validate={composeValidators(required, minLength(4))}
               />
+              {errors.password && touched.password && (
+                <div style={{ color: 'red' }}>{errors.password}</div>
+              )}
               <button
                 className="btn btn-primary mx-sm-3 mb-2"
                 type="submit"
@@ -77,14 +90,8 @@ class LoginPage extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  const { loggingIn } = state.authentication;
-  return { loggingIn };
-}
-
 const actionCreators = {
   loginAction: userActions.loginAction,
-  logoutAction: userActions.logoutAction,
 };
 
-export default connect(mapStateToProps, actionCreators)(LoginPage);
+export default connect(null, actionCreators)(LoginPage);

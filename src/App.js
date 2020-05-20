@@ -7,7 +7,6 @@ import useRoutes from './routes';
 
 function App(props) {
   const { loggedIn } = props;
-  console.log('loggedIn from APP', loggedIn);
   const routes = useRoutes(loggedIn);
   return (
     <Router>
@@ -19,8 +18,6 @@ function App(props) {
 }
 
 function mapStateToProps(state) {
-  console.log('state', state);
-  console.log('state.authentication map APP', state.authentication);
   const { loggedIn } = state.authentication;
   return { loggedIn };
 }

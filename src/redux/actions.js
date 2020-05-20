@@ -4,8 +4,8 @@ import { userService } from './services';
 
 const history = createBrowserHistory();
 
-function request(user) {
-  return { type: userConstants.LOGIN_REQUEST, user };
+function request() {
+  return { type: userConstants.LOGIN_REQUEST };
 }
 function success(user) {
   return { type: userConstants.LOGIN_SUCCESS, user };
@@ -23,14 +23,14 @@ function logoutRequest() {
 function loginAction(values, setSubmitting) {
   const { login } = values;
   return (dispatch) => {
-    dispatch(request(login));
+    dispatch(request());
     userService
       .loginToServer(values, setSubmitting)
       .then((res) => {
         setSubmitting(false);
         localStorage.setItem('user', JSON.stringify(res.data.name));
         dispatch(success(login));
-        history.push('/');
+        // history.push('/');
       })
       .catch((error) => {
         console.log(error);
@@ -41,14 +41,11 @@ function loginAction(values, setSubmitting) {
 }
 
 function logoutAction() {
-  console.log('logout Action');
   return (dispatch) => {
     dispatch(logoutRequest());
-    console.log(';dispatch(logout());');
     userService
       .logoutFromServer()
       .then(() => {
-        console.log('removeItem   Ipf,tqfadsddddddddddf');
         dispatch(logoutSuccess());
         localStorage.removeItem('user');
         // history.push('/login')

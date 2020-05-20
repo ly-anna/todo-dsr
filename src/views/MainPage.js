@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 function MainPage(props) {
-  console.log('MainPage pporops', props); // обсудить
+  const { user } = props;
   return (
     <div>
       <h1>Main Page </h1>
       <h2>
         Hello,
-        {props.user}
+        {user}
       </h2>
     </div>
   );
