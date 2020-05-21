@@ -15,6 +15,7 @@ function authentication(state = initialState, action) {
         loggingIn: false,
         loggedIn: true,
         user: action.user,
+        role: action.role,
       };
     case userConstants.LOGIN_FAILURE:
       return {

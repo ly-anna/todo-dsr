@@ -1,9 +1,25 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const AboutMe = () => (
-  <div>
-    <h1>Hello ME Page</h1>
-  </div>
-);
+function AboutMe(props) {
+  const { user, role } = props;
+  return (
+    <div>
+      <h1>
+        Hello,
+        {user}
+      </h1>
+      <h2>
+        Your role is: 
+        {role}
+      </h2>
+    </div>
+  );
+}
 
-export default AboutMe;
+function mapStateToProps(state) {
+  const { user, role } = state.authentication;
+  return { user, role };
+}
+
+export default connect(mapStateToProps, {})(AboutMe);

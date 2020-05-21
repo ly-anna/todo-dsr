@@ -7,8 +7,8 @@ const history = createBrowserHistory();
 function request() {
   return { type: userConstants.LOGIN_REQUEST };
 }
-function success(user) {
-  return { type: userConstants.LOGIN_SUCCESS, user };
+function success(user, role) {
+  return { type: userConstants.LOGIN_SUCCESS, user, role };
 }
 function failure(error) {
   return { type: userConstants.LOGIN_FAILURE, error };
@@ -21,16 +21,18 @@ function logoutRequest() {
 }
 
 function loginAction(values, setSubmitting) {
-  const { login } = values;
+  // const { login } = values;
   return (dispatch) => {
     dispatch(request());
     userService
       .loginToServer(values, setSubmitting)
       .then((res) => {
         setSubmitting(false);
-        localStorage.setItem('user', JSON.stringify(res.data.name));
-        dispatch(success(login));
-        // history.push('/');
+        const { name } = res.data;
+        const { role } = res.data;
+        localStorage.setItem('name', name);
+        localStorage.setItem('role', role);
+        dispatch(success(name, role));
       })
       .catch((error) => {
         console.log(error);
@@ -47,8 +49,8 @@ function logoutAction() {
       .logoutFromServer()
       .then(() => {
         dispatch(logoutSuccess());
-        localStorage.removeItem('user');
-        // history.push('/login')
+        localStorage.removeItem('name');
+        localStorage.removeItem('role');
       })
       .catch((error) => {
         console.log(error);
