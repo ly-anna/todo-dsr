@@ -5,7 +5,6 @@ import { userActions } from '../redux/actions';
 
 class Navbar extends React.Component {
   handleLogout = (e) => {
-    console.log('eeeeee', e);
     e.preventDefault();
     const { logoutAction } = this.props;
     logoutAction();
@@ -16,12 +15,22 @@ class Navbar extends React.Component {
       <nav className="navbar">
         <NavLink to="/">
           <button className="btn btn-link" type="button">
-            Main Page
+            Main
           </button>
         </NavLink>
-        <NavLink to="/todo">
+        <NavLink to="/todos">
           <button className="btn btn-link" type="button">
-            Todo Page
+            Todos
+          </button>
+        </NavLink>
+        <NavLink to="/me">
+          <button className="btn btn-link" type="button">
+            About me
+          </button>
+        </NavLink>
+        <NavLink to="/users">
+          <button className="btn btn-link" type="button">
+            Users
           </button>
         </NavLink>
         <button className="btn btn-link" type="button" onClick={(e) => this.handleLogout(e)}>
