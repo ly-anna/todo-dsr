@@ -10,6 +10,9 @@ const minLength = (min) => (value) =>
 const composeValidators = (...validators) => (value) =>
   validators.reduce((error, validator) => error || validator(value), undefined);
 
+const minLoginLength = 3;
+const minPasswordLength = 3;
+
 class LoginPage extends React.Component {
   handleSubmit = (values, foo) => {
     const { setSubmitting } = foo;
@@ -55,7 +58,7 @@ class LoginPage extends React.Component {
                 onBlur={handleBlur}
                 value={values.login}
                 placeholder="login"
-                validate={composeValidators(required, minLength(5))}
+                validate={composeValidators(required, minLength(minLoginLength))}
               />
               {errors.login && touched.login && <div style={{ color: 'red' }}>{errors.login}</div>}
 
@@ -67,7 +70,7 @@ class LoginPage extends React.Component {
                 onBlur={handleBlur}
                 value={values.password}
                 placeholder="password"
-                validate={composeValidators(required, minLength(4))}
+                validate={composeValidators(required, minLength(minPasswordLength))}
               />
               {errors.password && touched.password && (
                 <div style={{ color: 'red' }}>{errors.password}</div>
