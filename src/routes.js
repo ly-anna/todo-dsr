@@ -1,20 +1,29 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import MainPage from './views/MainPage';
-import TodoPage from './views/TodoPage';
+import Main from './views/Main';
+import Todos from './views/Todos';
 import LoginPage from './views/LoginPage';
+import AboutMe from './views/AboutMe';
+import Users from './views/Users';
 
 const useRoutes = (loggedIn) => {
   if (loggedIn) {
     return (
       <Switch>
         <Route path="/" exact>
-          <MainPage />
+          <Main />
         </Route>
-        <Route path="/todo">
-          <TodoPage />
+        <Route path="/todos">
+          <Todos />
         </Route>
+        <Route path="/me">
+          <AboutMe />
+        </Route>
+        <Route path="/users">
+          <Users />
+        </Route>
+        <Redirect to="/" />
       </Switch>
     );
   }
