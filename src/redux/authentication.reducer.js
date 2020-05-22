@@ -15,7 +15,7 @@ function authentication(state = initialState, action) {
         loggingIn: false,
         loggedIn: true,
         user: action.user,
-        role: action.role,
+        // role: action.role,
       };
     case userConstants.LOGIN_FAILURE:
       return {
@@ -26,7 +26,12 @@ function authentication(state = initialState, action) {
       return { loggingOut: true };
     case userConstants.LOGOUT_SUCCESS:
       return { loggedIn: false };
-
+    case userConstants.ABOUTME_SUCCESS:
+      return {
+        user: action.user,
+        role: action.role,
+        loggedIn: true,
+      };
     default:
       return state;
   }

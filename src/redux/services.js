@@ -19,7 +19,12 @@ const logoutFromServer = () => {
   return axios.post(`${appConstants.appUrl}/logout`);
 };
 
+const aboutMeFromServer = () => {
+  return axios.get(`${appConstants.appUrl}/me`);
+};
+
 export const userService = {
   loginToServer,
   logoutFromServer,
+  aboutMeFromServer,
 };

@@ -4,26 +4,29 @@ import { userService } from './services';
 
 const history = createBrowserHistory();
 
-function request() {
+function loginRequest() {
   return { type: userConstants.LOGIN_REQUEST };
 }
-function success(user, role) {
+function loginSuccess(user, role) {
   return { type: userConstants.LOGIN_SUCCESS, user, role };
 }
-function failure(error) {
+function loginFailure(error) {
   return { type: userConstants.LOGIN_FAILURE, error };
-}
-function logoutSuccess() {
-  return { type: userConstants.LOGOUT_SUCCESS };
 }
 function logoutRequest() {
   return { type: userConstants.LOGOUT_REQUEST };
 }
+function logoutSuccess() {
+  return { type: userConstants.LOGOUT_SUCCESS };
+}
+
+function aboutMeSuccess(user, role) {
+  return { type: userConstants.ABOUTME_SUCCESS, user, role };
+}
 
 function loginAction(values, setSubmitting) {
-  // const { login } = values;
   return (dispatch) => {
-    dispatch(request());
+    dispatch(loginRequest());
     userService
       .loginToServer(values, setSubmitting)
       .then((res) => {
@@ -32,11 +35,11 @@ function loginAction(values, setSubmitting) {
         const { role } = res.data;
         localStorage.setItem('name', name);
         localStorage.setItem('role', role);
-        dispatch(success(name, role));
+        dispatch(loginSuccess(name, role));
       })
       .catch((error) => {
         console.log(error);
-        dispatch(failure(error.toString()));
+        dispatch(loginFailure(error.toString()));
         throw error;
       });
   };
@@ -59,7 +62,24 @@ function logoutAction() {
   };
 }
 
+function aboutMeAction() {
+  return (dispatch) => {
+    userService
+      .aboutMeFromServer()
+      .then((res) => {
+        const { name } = res.data;
+        const { role } = res.data;
+        dispatch(aboutMeSuccess(name, role));
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
+  };
+}
+
 export const userActions = {
   loginAction,
   logoutAction,
+  aboutMeAction,
 };
