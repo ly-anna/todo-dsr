@@ -40,7 +40,7 @@ function loginAction(values, setSubmitting) {
       .catch((error) => {
         console.log(error);
         dispatch(loginFailure(error.toString()));
-        throw error;
+        //throw error; // не играет никакой роли
       });
   };
 }

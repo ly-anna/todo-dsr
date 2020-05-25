@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { userActions } from '../redux/actions';
 
+
+// папка утилс ->formvalidation
 const required = (value) => (value ? undefined : 'Required');
 const minLength = (min) => (value) =>
   value.length >= min ? undefined : `Length should be greater than ${min}`;
@@ -93,6 +95,7 @@ class LoginPage extends React.Component {
   }
 }
 
+//mapDispatchToprops
 const actionCreators = {
   loginAction: userActions.loginAction,
 };

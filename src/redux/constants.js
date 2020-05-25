@@ -8,6 +8,8 @@ export const userConstants = {
   ABOUTME_SUCCESS: 'ABOUTME_SUCCESS',
 };
 
+
+// вынести отдельно
 export const appConstants = {
   appUrl: 'http://localhost:3000/api/v1',
 };
