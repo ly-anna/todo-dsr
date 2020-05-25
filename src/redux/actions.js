@@ -1,8 +1,5 @@
-import { createBrowserHistory } from 'history';
 import { userConstants } from './constants';
 import { userService } from './services';
-
-const history = createBrowserHistory();
 
 function loginRequest() {
   return { type: userConstants.LOGIN_REQUEST };
@@ -40,7 +37,6 @@ function loginAction(values, setSubmitting) {
       .catch((error) => {
         console.log(error);
         dispatch(loginFailure(error.toString()));
-        //throw error; // не играет никакой роли
       });
   };
 }

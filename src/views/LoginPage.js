@@ -3,17 +3,13 @@ import { Formik, Field, Form } from 'formik';
 import { connect } from 'react-redux';
 
 import { userActions } from '../redux/actions';
-
-
-// папка утилс ->formvalidation
-const required = (value) => (value ? undefined : 'Required');
-const minLength = (min) => (value) =>
-  value.length >= min ? undefined : `Length should be greater than ${min}`;
-const composeValidators = (...validators) => (value) =>
-  validators.reduce((error, validator) => error || validator(value), undefined);
-
-const minLoginLength = 3;
-const minPasswordLength = 3;
+import {
+  required,
+  minLength,
+  composeValidators,
+  minLoginLength,
+  minPasswordLength,
+} from '../utils/formvalidation';
 
 class LoginPage extends React.Component {
   handleSubmit = (values, foo) => {
@@ -95,9 +91,8 @@ class LoginPage extends React.Component {
   }
 }
 
-//mapDispatchToprops
-const actionCreators = {
+const mapDispatchToprops = {
   loginAction: userActions.loginAction,
 };
 
-export default connect(null, actionCreators)(LoginPage);
+export default connect(null, mapDispatchToprops)(LoginPage);

@@ -46,11 +46,11 @@ function mapStateToProps(state) {
   return { loggingIn };
 }
 
-const actionCreators = {
+const mapDispatchToProps = {
   loginAction: userActions.loginAction,
   logoutAction: userActions.logoutAction,
 };
 
-export default connect(mapStateToProps, actionCreators)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
 
 // export default Navbar;

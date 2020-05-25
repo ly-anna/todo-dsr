@@ -8,9 +8,9 @@ import AboutMe from './views/AboutMe';
 import Users from './views/Users';
 
 
-//useRoutes - переименовать renderRouts  или 
+//useRoutes - переименовать renderRoutes  или 
 //
-const useRoutes = (loggedIn) => {
+const renderRoutes = (loggedIn) => {
   if (loggedIn) {
     return (
       <Switch>
@@ -41,4 +41,4 @@ const useRoutes = (loggedIn) => {
   );
 };
 
-export default useRoutes;
+export default renderRoutes;
