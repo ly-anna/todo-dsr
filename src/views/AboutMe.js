@@ -30,8 +30,8 @@ class AboutMe extends React.Component {
 }
 
 AboutMe.propTypes = {
-  user: PropTypes.string.isRequired,
-  role: PropTypes.string.isRequired,
+  user: PropTypes.string,
+  role: PropTypes.string,
   aboutMeAction: PropTypes.func.isRequired,
 };
 

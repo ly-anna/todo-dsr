@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { appConstants } from './constants';
+import appConstants from '../constants';
 
 axios.defaults.withCredentials = true;
 

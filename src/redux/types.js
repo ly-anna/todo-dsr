@@ -7,9 +7,3 @@ export const userConstants = {
   LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
   ABOUTME_SUCCESS: 'ABOUTME_SUCCESS',
 };
-
-
-// вынести отдельно
-export const appConstants = {
-  appUrl: 'http://localhost:3000/api/v1',
-};

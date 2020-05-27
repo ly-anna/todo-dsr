@@ -1,4 +1,4 @@
-import { userConstants } from './constants';
+import { userConstants } from './types';
 
 const user = JSON.parse(localStorage.getItem('user'));
 const initialState = user ? { loggingIn: false, loggedIn: true, user } : { loggedIn: false };

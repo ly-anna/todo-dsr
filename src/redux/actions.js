@@ -1,6 +1,7 @@
-import { userConstants } from './constants';
+import { userConstants } from './types';
 import { userService } from './services';
 
+// action creators
 function loginRequest() {
   return { type: userConstants.LOGIN_REQUEST };
 }
