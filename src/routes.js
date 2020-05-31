@@ -7,25 +7,17 @@ import LoginPage from './views/LoginPage';
 import AboutMe from './views/AboutMe';
 import Users from './views/Users';
 
-
-//useRoutes - переименовать renderRoutes  или 
+// useRoutes - переименовать renderRoutes  или
 //
-const renderRoutes = (loggedIn) => {
-  if (loggedIn) {
+const renderRoutes = (role) => {
+  if (role) {
     return (
       <Switch>
-        <Route path="/" exact>
-          <Main />
-        </Route>
-        <Route path="/todos">
-          <Todos />
-        </Route>
-        <Route path="/me">
-          <AboutMe />
-        </Route>
-        <Route path="/users">
-          <Users />
-        </Route>
+        <Route exact path="/" component={Main} />
+        <Route path="/todos" component={Todos} />
+        <Route path="/me" component={AboutMe} />
+        {role === 'admin' && <Route exact path="/users" component={Users} />}
+        {/* <Route path="/users" component={Users} /> */}
         <Redirect to="/" />
       </Switch>
     );

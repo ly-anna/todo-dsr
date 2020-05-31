@@ -11,6 +11,7 @@ class Navbar extends React.Component {
   };
 
   render() {
+    const { role } = this.props;
     return (
       <nav className="navbar">
         <NavLink to="/">
@@ -28,11 +29,13 @@ class Navbar extends React.Component {
             About me
           </button>
         </NavLink>
-        <NavLink to="/users">
-          <button className="btn btn-link" type="button">
-            Users
-          </button>
-        </NavLink>
+        {role === 'admin' && (
+          <NavLink to="/users">
+            <button className="btn btn-link" type="button">
+              Users
+            </button>
+          </NavLink>
+        )}
         <button className="btn btn-link" type="button" onClick={(e) => this.handleLogout(e)}>
           Logout
         </button>
@@ -42,8 +45,8 @@ class Navbar extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { loggingIn } = state.authentication;
-  return { loggingIn };
+  const { loggingIn, role } = state.authentication;
+  return { loggingIn, role };
 }
 
 const mapDispatchToProps = {

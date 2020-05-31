@@ -6,21 +6,21 @@ import Navbar from './components/Navbar';
 import renderRoutes from './routes';
 
 function App(props) {
-  const { loggedIn } = props;
   const { loggingIn } = props;
-  const routes = renderRoutes(loggedIn);
+  const { role } = props;
+  const routes = renderRoutes(role);
   return (
     <Router>
       <div>{loggingIn && <span>Sending request...</span>}</div>
-      {loggedIn && <Navbar />}
+      {role && <Navbar />}
       <div>{routes}</div>
     </Router>
   );
 }
 
 function mapStateToProps(state) {
-  const { loggedIn, loggingIn } = state.authentication;
-  return { loggedIn, loggingIn };
+  const { loggingIn, role } = state.authentication;
+  return { loggingIn, role };
 }
 
 export default connect(mapStateToProps, null)(App);

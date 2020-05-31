@@ -1,9 +1,16 @@
 import { userConstants } from './types';
 
-const user = JSON.parse(localStorage.getItem('user'));
-const initialState = user ? { loggingIn: false, loggedIn: true, user } : { loggedIn: false };
+console.log("localStorage.getItem('user')", localStorage.getItem('name'));
+// console.log("JSON.parse(localStorage.getItem('name'))", JSON.parse(localStorage.getItem('name')));
+
+// const user = JSON.parse(localStorage.getItem('name'));
+const user = localStorage.getItem('name');
+const role = localStorage.getItem('role');
+// const role = JSON.parse(localStorage.getItem('role'));
+const initialState = user ? { loggingIn: false, loggedIn: true, user, role } : { loggedIn: false };
 
 function authentication(state = initialState, action) {
+  console.log('initialState', initialState);
   switch (action.type) {
     case userConstants.LOGIN_REQUEST:
       return {
@@ -15,7 +22,7 @@ function authentication(state = initialState, action) {
         loggingIn: false,
         loggedIn: true,
         user: action.user,
-        // role: action.role,
+        role: action.role,
       };
     case userConstants.LOGIN_FAILURE:
       return {
