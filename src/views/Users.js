@@ -24,6 +24,10 @@ class Users extends React.Component {
                   , login:
                   {el.login}
                 </span>
+                <span>
+                  , role:
+                  {el.role}
+                </span>
               </li>
             ))}
           </ul>
