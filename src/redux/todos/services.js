@@ -3,8 +3,10 @@ import appConstants from '../../constants';
 
 axios.defaults.withCredentials = true;
 
-const todosFromServer = () => {
+export const todosFromServer = () => {
   return axios.get(`${appConstants.appUrl}/todos`);
 };
 
-export default todosFromServer;
+export const addTodoToServer = (values) => {
+  return axios.post(`${appConstants.appUrl}/todos`, values);
+}

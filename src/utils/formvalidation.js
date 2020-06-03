@@ -7,3 +7,5 @@ export const composeValidators = (...validators) => (value) =>
 
 export const minLoginLength = 3;
 export const minPasswordLength = 3;
+export const minTitleLength = 3;
+export const minDescriptionLength = 5;
