@@ -7,7 +7,9 @@ console.log("localStorage.getItem('user')", localStorage.getItem('name'));
 const user = localStorage.getItem('name');
 const role = localStorage.getItem('role');
 // const role = JSON.parse(localStorage.getItem('role'));
-const initialState = user ? { loggingIn: false, loggedIn: true, user, role } : { loggedIn: false };
+const initialState = user
+  ? { error: null, errorInfo: null, loggingIn: false, loggedIn: true, user, role }
+  : { loggedIn: false };
 
 function authentication(state = initialState, action) {
   console.log('initialState', initialState);
@@ -28,6 +30,8 @@ function authentication(state = initialState, action) {
       return {
         loggingIn: false,
         loggedIn: false,
+        error: action.error,
+        errorInfo: action.errorInfo,
       };
     case userConstants.LOGOUT_REQUEST:
       return { loggingOut: true };

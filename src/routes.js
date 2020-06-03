@@ -6,6 +6,7 @@ import Todos from './views/Todos';
 import LoginPage from './views/LoginPage';
 import AboutMe from './views/AboutMe';
 import Users from './views/Users';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // useRoutes - переименовать renderRoutes  или
 //
@@ -26,7 +27,9 @@ const renderRoutes = (role) => {
   return (
     <Switch>
       <Route path="/login">
-        <LoginPage />
+        <ErrorBoundary>
+          <LoginPage />
+        </ErrorBoundary>
       </Route>
       <Redirect to="/login" />
     </Switch>

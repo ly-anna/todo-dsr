@@ -8,8 +8,8 @@ function loginRequest() {
 function loginSuccess(user, role) {
   return { type: userConstants.LOGIN_SUCCESS, user, role };
 }
-function loginFailure(error) {
-  return { type: userConstants.LOGIN_FAILURE, error };
+function loginFailure(error, errorInfo) {
+  return { type: userConstants.LOGIN_FAILURE, error, errorInfo };
 }
 function logoutRequest() {
   return { type: userConstants.LOGOUT_REQUEST };
@@ -35,9 +35,10 @@ function loginAction(values, setSubmitting) {
         localStorage.setItem('role', role);
         dispatch(loginSuccess(name, role));
       })
-      .catch((error) => {
-        console.log(error);
-        dispatch(loginFailure(error.toString()));
+      .catch((error, errorInfo) => {
+        console.log('-----> console.log(error', error);
+        dispatch(loginFailure(error.toString()), errorInfo);
+        setSubmitting(false);
       });
   };
 }
