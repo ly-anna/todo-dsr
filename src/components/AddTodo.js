@@ -2,29 +2,6 @@ import React from 'react';
 import { Formik, Field, Form } from 'formik';
 import { connect } from 'react-redux';
 import { addTodoAction } from '../redux/todos/actions';
-
-// export default function addTodo() {
-// const handleOnChange = () => {};
-// const handleAdd = () => {
-//   addTodoAction(value);
-// };
-//   return (
-//     <>
-//       <input type="text" placeholder="Title" width="20em" />
-//       <input type="text" placeholder="Description" />
-//       <button type="button"> Add</button>
-//     </>
-//   );
-// }
-
-/* <>
-<input type="text" onChange={handleOnChange} value={value} placeholder="Title" width="20em" />
-<input type="text" onChange={handleOnChange} value={value} placeholder="Description" />
-<button onClick={handleAdd} type="button">
-  Add
-</button>
-</> */
-
 import {
   required,
   minLength,
@@ -38,6 +15,7 @@ class addTodo extends React.Component {
     const { setSubmitting } = foo;
     const { addTodoAction } = this.props;
     addTodoAction(values, setSubmitting);
+    foo.resetForm();
   };
 
   render() {
