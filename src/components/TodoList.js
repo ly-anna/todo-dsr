@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import TodoItem from './TodoItem';
 
 function TodoList(props) {
-  const { todosList } = props;
+  const { todosList, deleteTodoAction } = props;
   if (todosList) {
     console.log('todosList', todosList);
     return (
@@ -16,6 +16,7 @@ function TodoList(props) {
             title={t.title}
             description={t.description}
             createdBy={t.createdBy}
+            deleteTodoAction={deleteTodoAction}
           />
         ))}
       </div>

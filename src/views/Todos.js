@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { todosListAction } from '../redux/todos/actions';
+import { todosListAction, deleteTodoAction } from '../redux/todos/actions';
 import AddTodo from '../components/AddTodo';
 import TodoList from '../components/TodoList';
 import ErrorBoundary from '../components/ErrorBoundary';
@@ -14,13 +14,14 @@ class Todos extends React.Component {
   }
 
   render() {
+    const { deleteTodoAction } = this.props;
     return (
       <div>
         <h2>Todos:</h2>
         <ul>
           <AddTodo />
           <ErrorBoundary>
-            <TodoList />
+            <TodoList deleteTodoAction={deleteTodoAction} />
           </ErrorBoundary>
         </ul>
       </div>
@@ -39,6 +40,7 @@ function mapStateToProps(state) {
 }
 const mapDispatchToProps = {
   todosListAction,
+  deleteTodoAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Todos);

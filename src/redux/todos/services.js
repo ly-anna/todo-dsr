@@ -9,4 +9,9 @@ export const todosFromServer = () => {
 
 export const addTodoToServer = (values) => {
   return axios.post(`${appConstants.appUrl}/todos`, values);
-}
+};
+
+export const deleteTodoFromServer = (id) => {
+  console.log('id from deleteTodoFromServer', id);
+  return axios.delete(`${appConstants.appUrl}/todos/${id}`);
+};

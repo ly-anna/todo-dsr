@@ -1,6 +1,12 @@
-import { TODOS_REQUEST, TODOS_REQUEST_SUCCESS, TODOS_REQUEST_FAILURE, ADD_TODO } from './types';
+import {
+  TODOS_REQUEST,
+  TODOS_REQUEST_SUCCESS,
+  TODOS_REQUEST_FAILURE,
+  ADD_TODO,
+  DELETE_TODO,
+} from './types';
 
-import { todosFromServer, addTodoToServer } from './services';
+import { todosFromServer, addTodoToServer, deleteTodoFromServer } from './services';
 
 export const todosRequest = () => ({
   type: TODOS_REQUEST,
@@ -19,6 +25,11 @@ export const todosRequestFailure = (error) => ({
 export const addTodoRequest = (newTodo) => ({
   type: ADD_TODO,
   newTodo,
+});
+
+export const deleteTodoRequest = (id) => ({
+  type: DELETE_TODO,
+  id,
 });
 
 export function todosListAction() {
@@ -47,6 +58,19 @@ export function addTodoAction(values, setSubmitting) {
       })
       .catch((error) => {
         setSubmitting(false);
+        console.log(error);
+        throw error;
+      });
+  };
+}
+
+export function deleteTodoAction(id) {
+  return (dispatch) => {
+    deleteTodoFromServer(id)
+      .then(() => {
+        dispatch(deleteTodoRequest(id));
+      })
+      .catch((error) => {
         console.log(error);
         throw error;
       });

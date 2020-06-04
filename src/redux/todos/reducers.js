@@ -1,4 +1,10 @@
-import { TODOS_REQUEST, TODOS_REQUEST_SUCCESS, TODOS_REQUEST_FAILURE, ADD_TODO } from './types';
+import {
+  TODOS_REQUEST,
+  TODOS_REQUEST_SUCCESS,
+  TODOS_REQUEST_FAILURE,
+  ADD_TODO,
+  DELETE_TODO,
+} from './types';
 
 const user = JSON.parse(localStorage.getItem('user'));
 // const role = JSON.parse(localStorage.getItem('role'));
@@ -19,6 +25,13 @@ const todosReducer = (state = initialState, action) => {
     case ADD_TODO:
       return {
         todosList: state.todosList.concat(action.newTodo),
+        error: action.error,
+      };
+    case DELETE_TODO:
+      return {
+        todosList: state.todosList.filter((todoItem) => {
+          return todoItem.id !== action.id;
+        }),
         error: action.error,
       };
     default:

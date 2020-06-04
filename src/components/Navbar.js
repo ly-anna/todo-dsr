@@ -56,4 +56,3 @@ const mapDispatchToProps = {
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
 
-// export default Navbar;
